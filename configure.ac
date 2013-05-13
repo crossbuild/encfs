@@ -90,21 +90,6 @@ else
                  AC_MSG_ERROR([Unable to find libfuse.]))
 fi
 
-# check for a supported FUSE_MAJOR_VERSION.
-AC_MSG_CHECKING([For supported FUSE API version])
-AC_RUN_IFELSE([
-    AC_LANG_PROGRAM([[#include "fuse.h"]],
-[[
-    if (FUSE_MAJOR_VERSION < 2) return -1;
-    if (FUSE_MAJOR_VERSION > 2) return 0;
-    return FUSE_MINOR_VERSION >= 5 ? 0 : -1;
-]])],
-    [AC_MSG_RESULT([yes])],
-    [AC_MSG_RESULT([no])
-     AC_MSG_FAILURE([Encfs 1.3 requires FUSE 2.5 or newer.])
-    ]
-)
-
 dnl fuse_operations.setxattr was added 2004-03-31
 dnl only enable it if setxattr function is found..
 AC_CHECK_HEADERS([attr/xattr.h sys/xattr.h])
